@@ -1,4 +1,7 @@
-import { firebaseConfig } from "/public/firebase_secret.js"; // config from firebase_secret.js
+// import { firebaseConfig } from "/public/firebase_secret.js"; // for testing
+import { firebaseConfig } from "/firebase_secret.js"; // config from firebase_secret.js for release version
+
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"; // must always init firebase app
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js"; // add the firestore new database
 import { getAuth, GoogleAuthProvider, signInWithPopup }  from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js"; // add the auth
