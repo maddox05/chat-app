@@ -66,5 +66,5 @@ node_modules/
 .env
 
 # secret (ill prob leak it ngl)
-private/
-private/firebase_secret.js
+# private/
+# public/firebase_secret.js
