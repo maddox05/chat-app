@@ -1,4 +1,5 @@
-import { firebaseConfig } from "/firebase_secret.js"; // config from firebase_secret.js for release version
+import { firebaseConfig } from "/private/firebase_secret.js"; // config from firebase_secret.js for release version
+// import { firebaseConfig } from "/public/private/firebase_secret.js"; // config from firebase_secret.js for debug version
 
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"; // must always init firebase app
@@ -6,6 +7,7 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/9.17.1/firebase
 import { getAuth, GoogleAuthProvider, signInWithPopup }  from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js"; // add the auth
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-analytics.js"; // add the analytics
 
+import {rainbow} from "./effects.js";
 
 
 
@@ -33,6 +35,7 @@ function sign_in() {
             const user = result.user;
             username_div.innerHTML = ('User signed in:', user.displayName);
             signed_in();
+            rainbow();
         })
         .catch((error) => { // if error .catch(error, func)
             console.error('Sign-in error:', error);
