@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 function local_or_public() {
-    if (window.location.href.includes("localhost")) {
+    if (window.location.href.includes("localhost")) { // if the url includes localhost
         return "localhost";
     } else {
         return "public";
@@ -43,18 +43,18 @@ function sign_in() {
     const provider = new GoogleAuthProvider(); // init the provider
     signInWithPopup(auth, provider) // promise func to sign in
         .then((result) => { // if success .then(result, func)
-            const user = result.user;
+            const user = result.user; // get the user into a variable
             username_div.innerHTML = ('User signed in:', user.displayName);
-            signed_in();
-            rainbow();
+            signed_in(); // does html stuff
+            rainbow(); // does cool rainbow stuff
         })
         .catch((error) => { // if error .catch(error, func)
             console.error('Sign-in error:', error);
-            //lol
+            //shouldn't error if it does then sucks for them
 
         })
 }
 
-sign_in_button.addEventListener("click", sign_in);
+sign_in_button.addEventListener("click", sign_in); // adds event listener to sign in button (signin() func)
 
 

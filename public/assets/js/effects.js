@@ -9,7 +9,7 @@ if (message_input === null) {
     console.error("message input is null");
 }
 export function rainbow() {
-    if(message_input.innerHTML !== null) {
+    if(message_input.innerHTML !== null) { // if user has typed anything
         for (let i = 0; i < message_input.placeholder.length; i++) {
             message_input.style.color = random_color();
         }
