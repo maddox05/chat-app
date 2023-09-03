@@ -7,7 +7,7 @@ function local_or_public() {
     }
 }
 
-//import {firebaseConfig} from "/private/firebase_secret.js"; //local
+//import {firebaseConfig} from "/public/private/firebase_secret.js"; //local
 import {firebaseConfig} from "/private/firebase_secret.js"; // public
 
 // import { firebaseConfig } from "/public/private/firebase_secret.js"; // config from firebase_secret.js for debug version
