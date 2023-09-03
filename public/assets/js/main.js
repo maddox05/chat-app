@@ -97,8 +97,8 @@ function send_feature() { // working
     message_input.value = "";
     console.log("message sending:", saved_input);
 
-    const user = auth.currentUser;
-    if (user != null) {
+    const user = auth.currentUser;    // bad way to try not to have remote code execution using <script> tag
+    if (user != null && saved_input !== "" && !saved_input.includes("<script>")) { // if user is signed in and message is not empty
         const dataToSet = {
             timestamp: firebaseFirestore.serverTimestamp(),
             message: saved_input,
@@ -118,7 +118,7 @@ function send_feature() { // working
         ;
     }
     else {
-        console.log("User not signed in, so message CANNOT be sent");
+        console.log("User not signed in, input is nothing, or input contains <script> tag");
     }
 }
 
