@@ -163,7 +163,7 @@ sign_out_button.addEventListener("click", sign_out);
 
 
 auth.onAuthStateChanged(already_signed_in);
-get_messages();
+auth.onAuthStateChanged(get_messages);
 
 
 
