@@ -141,8 +141,8 @@ function get_messages() { // gets called every single time a new message gets ad
         {
             console.log("user currently null");
         }
-        setTimeout(get_messages, 10000); // run this function every 10 seconds, this needs to be fixed ASAP
-    //todo: fix this
+        setTimeout(get_messages, 5000); // run this function every 5 seconds, this needs to be fixed ASAP
+        //todo: fix this
 
 
 
