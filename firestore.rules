@@ -1,22 +1,15 @@
 rules_version = '2';
 service cloud.firestore {
-  match /databases/{database}/documents {
-    // Allow authenticated users to write to the "message_pool" collection
-    match /messages/message_pool/{document} {
-      allow write: if request.auth != null
-                   && request.resource.data.timestamp is timestamp
-                   && request.resource.data.message is string
-                   && request.resource.data.userID is string
-                   && request.resource.data.username is string;
-    }
-  }
-}
-rules_version = '2';
-
-service cloud.firestore {
     match /databases/{database}/documents {
-        match /{document=**} {
-            allow read, write: if false;
+        match /messages/{document} {
+            allow read: if request.auth != null; //'allow read' rule inside 'match /messages/{document}'checks for 'request.auth != null', which allows any signed in account (including anonymous accounts if enabled in Firebase Auth) to access data
+
+            allow write: if request.auth != null
+                && request.resource.data.timestamp is timestamp
+                && request.resource.data.message is string
+                && request.resource.data.userID is string
+                && request.resource.data.username is string;
+
         }
     }
 }

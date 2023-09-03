@@ -103,3 +103,4 @@ function get_messages() { // gets called every single time a new message gets ad
 
 
 
+
