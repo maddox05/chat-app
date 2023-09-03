@@ -1,6 +1,8 @@
 # Maddox's Chat Room
 
-Maddox's Chat Room is a simple chat application built using Vanilla JavaScript and Firebase. It allows users to chat in a shared room where everyone can see what everyone else types.
+Maddox's Chat Room is a simple chat application built using Vanilla JavaScript and Firebase. It allows users to chat in a shared room where everyone can see what everyone else types. 
+
+Started at @purduehackers *Hack Night 3.0* on September 1st 2023
 
 ## Features
 
