@@ -65,6 +65,14 @@ node_modules/
 # dotenv environment variables file
 .env
 
+# idea
+idea
+.idea
+.iml
+.xml
+/idea
+idea/
+
 # secret (ill prob leak it ngl)
 # private/
 # public/firebase_secret.js
