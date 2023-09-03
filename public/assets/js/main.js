@@ -31,6 +31,7 @@ const username_div = document.getElementById("username"); // get the username di
 const message_input = document.getElementById("message"); // get the message input
 const message_button = document.getElementById("send"); // get the message button
 const chat_div = document.getElementById("chat");
+const sign_out_button = document.getElementById("sign_out_button");
 
 
 
@@ -40,6 +41,8 @@ function signed_in() {
     sign_in_button.style.display = "none";
     message_input.style.visibility = "visible";
     message_button.style.visibility = "visible";
+    sign_out_button.style.visibility = "visible";
+
 }
 
 function already_signed_in(){ // run at start but later
@@ -147,6 +150,16 @@ function get_messages() { // gets called every single time a new message gets ad
 
 
 }
+
+function sign_out(){
+    auth.signOut().then(() => {
+        console.log("signed out");
+        window.location.reload();
+    }).catch((error) => {
+        console.log("error signing out");
+    });
+}
+sign_out_button.addEventListener("click", sign_out);
 
 
 auth.onAuthStateChanged(already_signed_in);
