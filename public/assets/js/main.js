@@ -1,4 +1,15 @@
-import { firebaseConfig } from "/private/firebase_secret.js"; // config from firebase_secret.js for release version
+// Import the functions you need from the SDKs you need
+function local_or_public() {
+    if (window.location.href.includes("localhost")) {
+        return "localhost";
+    } else {
+        return "public";
+    }
+}
+
+//import {firebaseConfig} from "/private/firebase_secret.js"; //local
+import {firebaseConfig} from "/public/private/firebase_secret.js"; // public
+
 // import { firebaseConfig } from "/public/private/firebase_secret.js"; // config from firebase_secret.js for debug version
 
 
