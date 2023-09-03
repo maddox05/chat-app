@@ -26,11 +26,11 @@ const auth = getAuth(app); // init the auth
 const analytics = getAnalytics(app); // init the analytics
 console.log("firebase succesfully started"); // log to console
 
-
 const sign_in_button = document.getElementById("signin"); // get the sign-in button
 const username_div = document.getElementById("username"); // get the username div
 const message_input = document.getElementById("message"); // get the message input
 const message_button = document.getElementById("send"); // get the message button
+const chat_div = document.getElementById("chat");
 
 
 
@@ -44,6 +44,9 @@ function signed_in() {
 
 function already_signed_in(){ // run at start but later
     if(auth.currentUser != null) {
+        console.log("signed in")
+
+        // close sign in popup if open
         username_div.innerHTML = ('User signed in:', auth.currentUser.displayName);
         signed_in(); // does html stuff
         rainbow(); // does cool rainbow stuff
@@ -86,14 +89,20 @@ sign_in_button.addEventListener("click", sign_in); // adds event listener to sig
 const what_collection = firebaseFirestore.collection(database, "messages"); // doc(instance, what doc u wanna write to)
 
 function send_feature() { // working
+    const saved_input = message_input.value.toString();
+
+    message_input.value = "";
+    console.log("message sending:", saved_input);
+
     const user = auth.currentUser;
     if (user != null) {
         const dataToSet = {
             timestamp: firebaseFirestore.serverTimestamp(),
-            message: message_input.value,
+            message: saved_input,
             userID: user.uid,
             username: user.displayName
         };
+        console.log("User signed in, so message CAN be sent");
         firebaseFirestore.addDoc(what_collection, dataToSet)
             .then(result => {
             console.log("Succesfully sent");
@@ -110,20 +119,39 @@ function send_feature() { // working
     }
 }
 
-const chat_div = document.getElementById("chat");
 // add a function that gets messages from database and displays them
 function get_messages() { // gets called every single time a new message gets added to the server, async function
     if (auth.currentUser != null) {
-        console.log(auth.currentUser);
 
-        const query = what_collection.database.orderBy("timestamp"); // .limit(25);
-        chat_div.innerHTML = query;
+        // const query = firebaseFirestore.orderBy(wh   at_collection, "timestamp", "desc").limitToLast(25); // how to check if firestore has been updated?
+        const query = firebaseFirestore.query(what_collection, firebaseFirestore.orderBy("timestamp", "desc"), firebaseFirestore.limit(10)); // query the database ordered by time with a limit of (x)
+        firebaseFirestore.getDocs(query).then((snapshot) => { // gets the documents the query found and then uses the snapshot to get the data
+            // console.log("snapshot: ", snapshot.docs); // snapshot.docs is an array of documents (docs) array of limit(x) documents
+            chat_div.innerHTML = snapshot.docs.map(doc => { // adds to the chat div inner html // snapshot.docs.map is an array of the documents (docs) array of limit(x) documents // .map does something to each value in the array
+                const data = doc.data(); // get the data from the doc (doc.data()) has a timestamp and message and etc is a class obejct
+                const time = data.timestamp.toDate();
+                const time_string = time.getHours() + ":" + time.getMinutes();
+                return `<div class="message">${data.username} "${data.message}" ${time_string}</div>`; // return the message in a div
+                //console.log(`username: ${data.username}, message: ${data.message}, time_string: ${time_string}`);
+
+            }).join(" "); // should be join(",") but this works so idk
+        });
     }
-    setTimeout(get_messages,3000);
+    else
+        {
+            console.log("user currently null");
+        }
+        setTimeout(get_messages, 10000); // run this function every 10 seconds, this needs to be fixed ASAP
+    //todo: fix this
+
+
 
 }
-//get_messages()
+
+
 auth.onAuthStateChanged(already_signed_in);
+get_messages();
+
 
 
 
