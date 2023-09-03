@@ -123,7 +123,7 @@ function send_feature() { // working
 function get_messages() { // gets called every single time a new message gets added to the server, async function
     if (auth.currentUser != null) {
 
-        // const query = firebaseFirestore.orderBy(wh   at_collection, "timestamp", "desc").limitToLast(25); // how to check if firestore has been updated?
+        // if new values in firestore // how to check if firestore has been updated?
         const query = firebaseFirestore.query(what_collection, firebaseFirestore.orderBy("timestamp", "desc"), firebaseFirestore.limit(10)); // query the database ordered by time with a limit of (x)
         firebaseFirestore.getDocs(query).then((snapshot) => { // gets the documents the query found and then uses the snapshot to get the data
             // console.log("snapshot: ", snapshot.docs); // snapshot.docs is an array of documents (docs) array of limit(x) documents
