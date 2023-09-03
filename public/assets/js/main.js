@@ -13,7 +13,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebas
 import * as firebaseFirestore from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
 
 
-import { getAuth, GoogleAuthProvider, signInWithPopup }  from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js"; // add the auth
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged }  from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js"; // add the auth
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-analytics.js"; // add the analytics
 
 import {rainbow} from "./effects.js";
@@ -41,23 +41,45 @@ function signed_in() {
     message_input.style.visibility = "visible";
     message_button.style.visibility = "visible";
 }
+
+function already_signed_in(){ // run at start but later
+    if(auth.currentUser != null) {
+        username_div.innerHTML = ('User signed in:', auth.currentUser.displayName);
+        signed_in(); // does html stuff
+        rainbow(); // does cool rainbow stuff
+        message_button.addEventListener("click", send_feature); // adds event listener to message button (send_feature() func)
+    }
+    else{
+        console.log("was not signed in")
+    }
+
+}
+
+
 function sign_in() {
-    const provider = new GoogleAuthProvider(); // init the provider
-    signInWithPopup(auth, provider) // promise func to sign in
-        .then((result) => { // if success .then(result, func)
-            const user = result.user; // get the user into a variable
-            username_div.innerHTML = ('User signed in:', user.displayName);
-            signed_in(); // does html stuff
-            rainbow(); // does cool rainbow stuff
-            message_button.addEventListener("click", send_feature); // adds event listener to message button (send_feature() func)
+    if(auth.currentUser != null){
+        already_signed_in()
+        console.log("already signed in")
+    }
+    else {
+        console.log("sign in started")
+
+        const provider = new GoogleAuthProvider(); // init the provider
+        signInWithPopup(auth, provider) // promise func to sign in
+            .then((result) => { // if success .then(result, func)
+                const user = result.user; // get the user into a variable
+                already_signed_in()
 
 
-        })
-        .catch((error) => { // if error .catch(error, func)
-            console.error('Sign-in error:', error);
-            //shouldn't error if it does then sucks for them
 
-        })
+
+            })
+            .catch((error) => { // if error .catch(error, func)
+                console.error('Sign-in error:', error);
+                //shouldn't error if it does then sucks for them
+
+            })
+    }
 }
 sign_in_button.addEventListener("click", sign_in); // adds event listener to sign in button (signin() func)
 
@@ -92,9 +114,18 @@ const chat_div = document.getElementById("chat");
 // add a function that gets messages from database and displays them
 function get_messages() { // gets called every single time a new message gets added to the server, async function
     if (auth.currentUser != null) {
-        return;
+        console.log(auth.currentUser);
+
+        const query = what_collection.database.orderBy("timestamp"); // .limit(25);
+        chat_div.innerHTML = query;
     }
+    setTimeout(get_messages,3000);
+
 }
+//get_messages()
+auth.onAuthStateChanged(already_signed_in);
+
+
 
 
 
