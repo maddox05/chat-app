@@ -24,7 +24,7 @@ import {rainbow} from "./effects.js";
 const app = initializeApp(firebaseConfig); // init the app
 const database = firebaseFirestore.getFirestore(app); // init the database
 const auth = getAuth(app); // init the auth
-const analytics = getAnalytics(app); // init the analytics
+const analytics = getAnalytics(app); // init the analytics //todo fix analytics
 console.log("firebase succesfully started"); // log to console
 
 const sign_in_button = document.getElementById("signin"); // get the sign-in button
@@ -62,7 +62,7 @@ function already_signed_in(){ // run at start but later
 
 }
 function first_time_sign_in() { // run at start but later
-    window.location.reload();
+    window.location.reload(); // reloads the page since if you switch accounts without reloading it errors. prob cuz my use of local user vs actual user
 
 }
 
@@ -95,7 +95,7 @@ function sign_in() {
 }
 sign_in_button.addEventListener("click", sign_in); // adds event listener to sign in button (signin() func)
 
-const what_collection = firebaseFirestore.collection(database, "messages"); // doc(instance, what doc u wanna write to)
+const what_collection = firebaseFirestore.collection(database, "messages"); // collection, (database, collection name)
 
 function send_feature() { // working
     const saved_input = message_input.value.toString();
@@ -138,7 +138,7 @@ function initial_message_load(total_messages_queryed) { // gets called every sin
             // console.log("snapshot: ", snapshot.docs); // snapshot.docs is an array of documents (docs) array of limit(x) documents
 
             snapshot.docs.slice((1)).map(doc => { // slice wtf lol
-                generate_divs_from_doc_class(doc, false)
+                generate_divs_from_doc_class(doc, false) // generate divs from the doc for each div, also dont prepend
             }).join(" "); // should be join(",") but this works so idk
 
 
@@ -155,11 +155,11 @@ function initial_message_load(total_messages_queryed) { // gets called every sin
 const query = firebaseFirestore.query(what_collection, firebaseFirestore.orderBy("timestamp", "desc"), firebaseFirestore.limit(1)); // query the database ordered by time with a limit of (x)
 
 const unsubscribe  = firebaseFirestore.onSnapshot(query, (snapshot) =>{ // runs anytime anything happens in messages
-    generate_divs_from_doc_class(snapshot.docs[0], true); // gets the first doc in the array of docs
+    generate_divs_from_doc_class(snapshot.docs[0], true); // gets the first doc in the array of docs array should be length 1 [0]
 
 });
 
-function sign_out(){
+function sign_out(){ // obviously working
     auth.signOut().then(() => {
         console.log("signed out");
         window.location.reload();
@@ -168,18 +168,18 @@ function sign_out(){
     });
 }
 
-sign_out_button.addEventListener("click", sign_out);
+sign_out_button.addEventListener("click", sign_out); // adds event listener to sign out button (sign_out() func)
 
 
-auth.onAuthStateChanged(already_signed_in);
+auth.onAuthStateChanged(already_signed_in); // runs when auth state changes (sign in or sign out) //todo this is why i have to do the window.location.reload() bullshit
 auth.onAuthStateChanged(()=>{
-   initial_message_load(10) // load 10 messages at start (keep them reads to a minimum)
+   initial_message_load(10) // load 10 messages at start (keep them reads to a minimum) actually loads 9 cuz of the slice
 });
 
 function generate_divs_from_doc_class(doc_sent, prepend) { // gets called every single time a new message gets added to the server, async function
     const data = doc_sent.data(); // get the data from the doc (doc.data()) has a timestamp and message and etc is a class object
 
-    const time = data.timestamp.toDate();
+    const time = data.timestamp.toDate(); // keeps erroring even though it works idk why
     const time_string = time.getHours() + ":" + time.getMinutes();
     let who_sent = "";
     if (data.username === auth.currentUser.displayName) {
