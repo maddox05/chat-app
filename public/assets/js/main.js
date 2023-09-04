@@ -173,7 +173,7 @@ sign_out_button.addEventListener("click", sign_out); // adds event listener to s
 
 auth.onAuthStateChanged(already_signed_in); // runs when auth state changes (sign in or sign out) //todo this is why i have to do the window.location.reload() bullshit
 auth.onAuthStateChanged(()=>{
-   initial_message_load(10) // load 10 messages at start (keep them reads to a minimum) actually loads 9 cuz of the slice
+   initial_message_load(20) // load x amt messages at start (keep them reads to a minimum) actually loads 9 cuz of the slice
 });
 
 function generate_divs_from_doc_class(doc_sent, prepend) { // gets called every single time a new message gets added to the server, async function
