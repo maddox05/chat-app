@@ -10,7 +10,7 @@ function local_or_public() {
 
 import {firebaseConfig} from "../../private/firebase_secret.js"; // fixed
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"; // must always init firebase app
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"; // idk why but local firebase does not work so i just import the code from the website repo
 import * as firebaseFirestore from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
 
 
@@ -48,27 +48,22 @@ function signed_in() {
 
 function already_signed_in(){ // run at start but later
     if(auth.currentUser != null) {
-        console.log("signed in")
-
-        // close sign in popup if open
-        username_div.innerHTML = ('User signed in:', auth.currentUser.displayName);
-        signed_in(); // does html stuff
+        console.log("signed in");
+        username_div.innerHTML = ('User signed in:' , auth.currentUser.displayName);
+        signed_in(); // does html stuff, basically opening the chat for you and letting you then sign out if you want
         rainbow(); // does cool rainbow stuff
         message_button.addEventListener("click", send_feature); // adds event listener to message button (send_feature() func)
     }
     else{
-        console.log("was not signed in")
+        console.log("was not signed in");
     }
 
 }
-function first_time_sign_in() { // run at start but later
-    window.location.reload(); // reloads the page since if you switch accounts without reloading it errors. prob cuz my use of local user vs actual user
 
-}
 
 function sign_in() {
     if(auth.currentUser != null){
-        already_signed_in()
+        already_signed_in();
         console.log("already signed in")
     }
     else {
@@ -79,8 +74,7 @@ function sign_in() {
             .then((result) => { // if success .then(result, func)
                 const user = result.user; // get the user into a variable
 
-                //already_signed_in()
-                first_time_sign_in(); // does html stuff
+                window.location.reload(); // reload the page so you can already be signed in as browser saves cookies (u stay signed in)
 
 
 
@@ -95,12 +89,11 @@ function sign_in() {
 }
 sign_in_button.addEventListener("click", sign_in); // adds event listener to sign in button (signin() func)
 
-const what_collection = firebaseFirestore.collection(database, "messages"); // collection, (database, collection name)
+const what_collection = firebaseFirestore.collection(database, "messages"); // collection, (database, collection name) // what collection of documents I want to look at
 
 function send_feature() { // working
-    const saved_input = message_input.value.toString();
+    const saved_input = message_input.value.toString(); // get the value of the message input you are trying to send
 
-    message_input.value = "";
     console.log("message sending:", saved_input);
 
     const user = auth.currentUser;    // bad way to try not to have remote code execution using <script> tag
@@ -114,7 +107,8 @@ function send_feature() { // working
         console.log("User signed in, so message CAN be sent");
         firebaseFirestore.addDoc(what_collection, dataToSet)
             .then(result => {
-            console.log("Succesfully sent");
+                message_input.value = ""; // clear the message input
+                console.log("Succesfully sent");
 
         })
             .catch(error =>{
@@ -128,8 +122,8 @@ function send_feature() { // working
     }
 }
 
-// add a function that gets messages from database and displays them
-function initial_message_load(total_messages_queryed) { // gets called every single time a new message gets added to the server, async function
+// gets at start and loads x amt of messages
+function initial_message_load(total_messages_queryed) {
     if (auth.currentUser != null) {
 
         // if new values in firestore // how to check if firestore has been updated?
@@ -153,25 +147,25 @@ function initial_message_load(total_messages_queryed) { // gets called every sin
 }
 // always runs
 const query = firebaseFirestore.query(what_collection, firebaseFirestore.orderBy("timestamp", "desc"), firebaseFirestore.limit(1)); // query the database ordered by time with a limit of (x)
-
-const unsubscribe  = firebaseFirestore.onSnapshot(query, (snapshot) =>{ // runs anytime anything happens in messages
+const unsubscribe  = firebaseFirestore.onSnapshot(query, (snapshot) =>{ // runs anytime anything happens in messages also runs at start for no fucking reason so i had to do a lil work around
     generate_divs_from_doc_class(snapshot.docs[0], true); // gets the first doc in the array of docs array should be length 1 [0]
 
 });
-
-function sign_out(){ // obviously working
+// unsubscribe(); // unsubscribe from the query
+function sign_out(){ // signs the user out
     auth.signOut().then(() => {
         console.log("signed out");
         window.location.reload();
     }).catch((error) => {
-        console.log("error: ",error);
+        console.log("you should reload the page // error: ",error);
     });
 }
 
 sign_out_button.addEventListener("click", sign_out); // adds event listener to sign out button (sign_out() func)
 
 
-auth.onAuthStateChanged(already_signed_in); // runs when auth state changes (sign in or sign out) //todo this is why i have to do the window.location.reload() bullshit
+auth.onAuthStateChanged(already_signed_in); // runs when auth state changes (sign in or sign out)
+// just leave it ig it works
 auth.onAuthStateChanged(()=>{
    initial_message_load(20) // load x amt messages at start (keep them reads to a minimum) actually loads 9 cuz of the slice
 });
@@ -193,7 +187,6 @@ function generate_divs_from_doc_class(doc_sent, prepend) { // gets called every 
     }
     else{
         const new_div = `<div class="${who_sent}">${data.username} "${data.message}" ${time_string}</div>`; // Create a temporary container element
-
         const tempContainer = document.createElement('div'); // Set the innerHTML of the container to the new_div content
         tempContainer.innerHTML = new_div;
         chat_div.insertBefore(tempContainer.firstChild, chat_div.firstChild); // Prepend the divElement to chat_div
