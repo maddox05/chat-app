@@ -1,4 +1,5 @@
 // Import the functions you need from the SDKs you need
+
 function local_or_public() {
     if (window.location.href.includes("localhost")) { // if the url includes localhost
         return "localhost";
@@ -60,7 +61,10 @@ function already_signed_in(){ // run at start but later
     }
 
 }
+function first_time_sign_in() { // run at start but later
+    window.location.reload();
 
+}
 
 function sign_in() {
     if(auth.currentUser != null){
@@ -74,7 +78,9 @@ function sign_in() {
         signInWithPopup(auth, provider) // promise func to sign in
             .then((result) => { // if success .then(result, func)
                 const user = result.user; // get the user into a variable
-                already_signed_in()
+
+                //already_signed_in()
+                first_time_sign_in(); // does html stuff
 
 
 
@@ -123,47 +129,76 @@ function send_feature() { // working
 }
 
 // add a function that gets messages from database and displays them
-function get_messages() { // gets called every single time a new message gets added to the server, async function
+function initial_message_load(total_messages_queryed) { // gets called every single time a new message gets added to the server, async function
     if (auth.currentUser != null) {
 
         // if new values in firestore // how to check if firestore has been updated?
-        const query = firebaseFirestore.query(what_collection, firebaseFirestore.orderBy("timestamp", "desc"), firebaseFirestore.limit(10)); // query the database ordered by time with a limit of (x)
+        const query = firebaseFirestore.query(what_collection, firebaseFirestore.orderBy("timestamp", "desc"), firebaseFirestore.limit(total_messages_queryed)); // query the database ordered by time with a limit of (x)
         firebaseFirestore.getDocs(query).then((snapshot) => { // gets the documents the query found and then uses the snapshot to get the data
             // console.log("snapshot: ", snapshot.docs); // snapshot.docs is an array of documents (docs) array of limit(x) documents
-            chat_div.innerHTML = snapshot.docs.map(doc => { // adds to the chat div inner html // snapshot.docs.map is an array of the documents (docs) array of limit(x) documents // .map does something to each value in the array
-                const data = doc.data(); // get the data from the doc (doc.data()) has a timestamp and message and etc is a class obejct
-                const time = data.timestamp.toDate();
-                const time_string = time.getHours() + ":" + time.getMinutes();
-                return `<div class="message">${data.username} "${data.message}" ${time_string}</div>`; // return the message in a div
-                //console.log(`username: ${data.username}, message: ${data.message}, time_string: ${time_string}`);
 
+            snapshot.docs.slice((1)).map(doc => { // slice wtf lol
+                generate_divs_from_doc_class(doc, false)
             }).join(" "); // should be join(",") but this works so idk
+
+
         });
     }
     else
         {
             console.log("user currently null");
         }
-        setTimeout(get_messages, 5000); // run this function every 5 seconds, this needs to be fixed ASAP
-        //todo: fix this
-
 
 
 }
+// always runs
+const query = firebaseFirestore.query(what_collection, firebaseFirestore.orderBy("timestamp", "desc"), firebaseFirestore.limit(1)); // query the database ordered by time with a limit of (x)
+
+const unsubscribe  = firebaseFirestore.onSnapshot(query, (snapshot) =>{ // runs anytime anything happens in messages
+    generate_divs_from_doc_class(snapshot.docs[0], true); // gets the first doc in the array of docs
+
+});
 
 function sign_out(){
     auth.signOut().then(() => {
         console.log("signed out");
         window.location.reload();
     }).catch((error) => {
-        console.log("error signing out");
+        console.log("error: ",error);
     });
 }
+
 sign_out_button.addEventListener("click", sign_out);
 
 
 auth.onAuthStateChanged(already_signed_in);
-auth.onAuthStateChanged(get_messages);
+auth.onAuthStateChanged(()=>{
+   initial_message_load(10) // load 10 messages at start (keep them reads to a minimum)
+});
+
+function generate_divs_from_doc_class(doc_sent, prepend) { // gets called every single time a new message gets added to the server, async function
+    const data = doc_sent.data(); // get the data from the doc (doc.data()) has a timestamp and message and etc is a class object
+
+    const time = data.timestamp.toDate();
+    const time_string = time.getHours() + ":" + time.getMinutes();
+    let who_sent = "";
+    if (data.username === auth.currentUser.displayName) {
+        who_sent = "you_sent";
+    } else {
+        who_sent = "they_sent";
+    }
+
+    if(prepend === false) {
+        chat_div.innerHTML += `<div class=${who_sent}>${data.username} "${data.message}" ${time_string}</div>`; // return the message in a div
+    }
+    else{
+        const new_div = `<div class="${who_sent}">${data.username} "${data.message}" ${time_string}</div>`; // Create a temporary container element
+
+        const tempContainer = document.createElement('div'); // Set the innerHTML of the container to the new_div content
+        tempContainer.innerHTML = new_div;
+        chat_div.insertBefore(tempContainer.firstChild, chat_div.firstChild); // Prepend the divElement to chat_div
+    }
+}
 
 
 
