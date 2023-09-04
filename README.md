@@ -8,7 +8,7 @@ Started at [purduehackers](https://github.com/purduehackers) *Hack Night 3.0* on
 
 - Real-time chat: Messages are sent and received in real-time.
 - User-friendly interface: Simple and intuitive design.
-- No login required: Anyone can join and start chatting immediately.
+- Anyone can join and start chatting immediately.
 
 ## Technologies Used
 
