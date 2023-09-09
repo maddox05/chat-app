@@ -33,6 +33,8 @@ const message_input = document.getElementById("message"); // get the message inp
 const message_button = document.getElementById("send"); // get the message button
 const chat_div = document.getElementById("chat");
 const sign_out_button = document.getElementById("sign_out_button");
+const login_text_to_show = document.getElementById("login_for_nerd");
+
 
 
 
@@ -40,6 +42,7 @@ const sign_out_button = document.getElementById("sign_out_button");
 
 function signed_in() {
     sign_in_button.style.display = "none";
+    login_text_to_show.style.visibility = "hidden";
     message_input.style.visibility = "visible";
     message_button.style.visibility = "visible";
     sign_out_button.style.visibility = "visible";
