@@ -137,6 +137,7 @@ function initial_message_load(total_messages_queryed) {
             snapshot.docs.slice((1)).map(doc => { // slice wtf lol
                 generate_divs_from_doc_class(doc, false) // generate divs from the doc for each div, also dont prepend
             }).join(" "); // should be join(",") but this works so idk
+            // func creates array of divs but then join joins the array with spaces, then when inside of inner html the divs become there own div.
 
 
         });
