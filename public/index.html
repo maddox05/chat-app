@@ -1,46 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-
-    <script type = "module" src="assets/js/main.js" ></script>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="title" content="Chat Room">
-    <meta name="description" content="Welcome to a chat room!">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="language" content="English">
+  <head>
     <title>Maddox's Chat Room</title>
-    <link rel="icon" type="image/x-icon" href="/assets/img/minecraft.png">
-    <link rel="mask-icon" href="/assets/img/minecraft.png" color="#111">
-    <link rel="stylesheet" href="assets/css/main.css" type="text/css">
-    <script type = "module" src="assets/js/effects.js" defer ></script>
 
+    <!--~ Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="title" content="Chat Room" />
+    <meta name="description" content="Welcome to a chat room!" />
+    <meta name="language" content="English" />
 
+    <!--* Favicon & CSS  -->
+    <link rel="icon" type="image/x-icon" href="/assets/img/minecraft.png" />
+    <link rel="mask-icon" href="/assets/img/minecraft.png" color="#111" />
+    <link rel="stylesheet" href="assets/css/main.css" type="text/css" />
 
-    <noscript>Your browser doesn't have JavaScript enabled. Please enable JavaScript or switch to a browser that
-        supports it.</noscript>
-
-</head>
-<body style="background: white">
+    <!--^ Scripts -->
+    <script type="module" src="assets/js/main.js"></script>
+    <script type="module" src="assets/js/effects.js" defer></script>
+    <noscript
+      >Your browser doesn't have JavaScript enabled. Please enable JavaScript or
+      switch to a browser that supports it.</noscript
+    >
+  </head>
+  <body>
     <div class="wrapper">
-        <div class="title" >Maddox's Chat Room <a href="https://github.com/maddox05/chat-app">(Github)</a></div>
-        <div id="login_for_nerd" style="font-family: sans-serif; visibility: visible">Login to view chats ==></div>
-        <div class="username" id="username"></div>    <!--  displays username when logged in -->
-        <label>
-            <input style="visibility: hidden; font-family: 'monocraftregular', sans-serif" type="text" id="message" placeholder="Message">
-        </label>
-        <button style="visibility: hidden;" id="send">Send</button> <!--  sends message (does nothing rn) -->
-        <button style="float: right; font-family: 'system-ui'; visibility: hidden" id="sign_out_button">Sign Out</button>
-        <br>
-        <button style="float: right; font-family: 'system-ui';" id = "signin" >Sign in with Google<img src="assets/img/googleIcon.png" width="30" height="30"></button>
-
-        <div id="chat"></div>
-
-
+      <button id="signin" class="signin">
+        <img src="./assets/svg/google.svg" alt="Google Logo" />
+        Sign in with Google
+      </button>
+      <div class="title">Maddox's Chat Room</div>
+      <div id="login_for_nerd">Sign in to view chats</div>
+      <div class="username" id="username"></div>
+      <!--  displays username when logged in -->
+      <label>
+        <input type="text" id="message" placeholder="Message" />
+      </label>
+      <button id="send">Send</button>
+      <!--  sends message (does nothing rn) -->
+      <button id="sign_out_button">Sign Out</button>
+      <div id="chat"></div>
     </div>
-
-
-
-</body>
+    <footer>
+      <a
+        href="https://github.com/maddox05/chat-app"
+        class="made-by"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Made with 💙 by Maddox</a
+      >
+    </footer>
+  </body>
 </html>

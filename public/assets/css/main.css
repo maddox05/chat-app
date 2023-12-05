@@ -1,29 +1,111 @@
-.title{
-    font-size: 20px;
-    font-weight: bold;
-    color: #000;
-    margin-bottom: 10px;
-}
-.username{
-    font-family: sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    color: #000;
-    margin-bottom: 10px;
-}
-
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
 @font-face {
-    font-family: 'monocraftregular';
-    src: url('../fonts/monocraft-webfont.woff2') format('woff2'),
-    url('../fonts/monocraft-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-
+  font-family: "Monocraft";
+  src: url("../fonts/monocraft-webfont.woff2") format("woff2"),
+    url("../fonts/monocraft-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
-.wrapper{
-    font-family: 'monocraftregular', sans-serif;
-    font-size: 16px;
-    font-weight: normal;
-    color: #000;
-    margin-bottom: 10px;
+
+body {
+  margin: 1rem;
+  background-color: #22303a;
+  font-family: sans-serif;
+  color: #f0f4f6;
+}
+
+a {
+  font-family: "Montserrat", sans-serif;
+  text-decoration: none;
+  color: #f0f4f6;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  cursor: default;
+}
+
+.username {
+  font-family: sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.wrapper {
+  font-family: "Monocraft", "Montserrat", sans-serif;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+footer {
+  position: fixed;
+  bottom: 1rem;
+  width: 100%;
+  text-align: center;
+}
+
+.made-by {
+  transition: all 0.25s cubic-bezier(0.01, 0.94, 0.46, 0.99);
+}
+
+.made-by:hover {
+  color: #98b1c3;
+}
+
+#login_for_nerd {
+  visibility: visible;
+  cursor: default;
+}
+
+#message {
+  font-family: "Monocraft", sans-serif;
+  visibility: hidden;
+}
+
+#send {
+  visibility: hidden;
+}
+
+#sign_out_button {
+  float: right;
+  font-family: "system-ui";
+  visibility: hidden;
+}
+
+.signin {
+  float: right;
+  max-width: 320px;
+  display: flex;
+  padding: 0.5rem 1.4rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  vertical-align: middle;
+  align-items: center;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  gap: 0.75rem;
+  color: #f0f4f6;
+  background-color: #19242b;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0, 0.87, 0.12, 1);
+}
+
+.signin:hover {
+  transform: scale(1.025);
+}
+
+.signin:active {
+  transform: scale(0.975);
+}
+
+button img {
+  height: 24px;
+  width: auto;
+  pointer-events: none;
 }
