@@ -1,29 +1,58 @@
-.title{
-    font-size: 20px;
-    font-weight: bold;
-    color: #000;
-    margin-bottom: 10px;
-}
-.username{
-    font-family: sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    color: #000;
-    margin-bottom: 10px;
-}
-
 @font-face {
-    font-family: 'monocraftregular';
-    src: url('../fonts/monocraft-webfont.woff2') format('woff2'),
-    url('../fonts/monocraft-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-
+  font-family: "monocraftregular";
+  src: url("../fonts/monocraft-webfont.woff2") format("woff2"),
+    url("../fonts/monocraft-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
-.wrapper{
-    font-family: 'monocraftregular', sans-serif;
-    font-size: 16px;
-    font-weight: normal;
-    color: #000;
-    margin-bottom: 10px;
+
+body {
+  background-color: white;
+  font-family: sans-serif;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 10px;
+}
+
+.username {
+  font-family: sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 10px;
+}
+
+.wrapper {
+  font-family: "monocraftregular", sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  color: #000;
+  margin-bottom: 10px;
+}
+
+#login_for_nerd {
+  visibility: visible;
+}
+
+#message {
+  font-family: "monocraftregular", sans-serif;
+  visibility: hidden;
+}
+
+#send {
+  visibility: hidden;
+}
+
+#sign_out_button {
+  float: right;
+  font-family: "system-ui";
+  visibility: hidden;
+}
+
+#signin {
+  float: right;
 }
