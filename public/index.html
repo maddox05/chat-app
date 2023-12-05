@@ -26,11 +26,12 @@
   </head>
   <body>
     <div class="wrapper">
-      <div class="title">
-        Maddox's Chat Room
-        <a href="https://github.com/maddox05/chat-app">(Github)</a>
-      </div>
-      <div id="login_for_nerd">Login to view chats ==></div>
+      <button id="signin" class="signin">
+        <img src="./assets/svg/google.svg" alt="Google Logo" />
+        Sign in with Google
+      </button>
+      <div class="title">Maddox's Chat Room</div>
+      <div id="login_for_nerd">Sign in to view chats</div>
       <div class="username" id="username"></div>
       <!--  displays username when logged in -->
       <label>
@@ -39,15 +40,16 @@
       <button id="send">Send</button>
       <!--  sends message (does nothing rn) -->
       <button id="sign_out_button">Sign Out</button>
-      <button id="signin">
-        Sign in with Google<img
-          alt="Google Icon"
-          src="assets/img/googleIcon.png"
-          width="30"
-          height="30"
-        />
-      </button>
       <div id="chat"></div>
     </div>
+    <footer>
+      <a
+        href="https://github.com/maddox05/chat-app"
+        class="made-by"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Made with 💙 by Maddox</a
+      >
+    </footer>
   </body>
 </html>
