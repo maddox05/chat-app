@@ -41,6 +41,10 @@ a {
   display: none;
 }
 
+.wrapper.loaded {
+  display: block;
+}
+
 footer {
   position: fixed;
   bottom: 1rem;

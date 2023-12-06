@@ -1,3 +1,24 @@
+const wrapperElement = document.getElementById("wrapper");
+const loaderElement = document.getElementById("loader");
+
+document.addEventListener("DOMContentLoaded", function () {
+  setTimeout(() => {
+    wrapperElement.style.transition = "opacity 0.25s";
+    loaderElement.style.transition = "opacity 0.25s";
+    wrapperElement.style.opacity = "0";
+    loaderElement.style.opacity = "0";
+
+    setTimeout(() => {
+      wrapperElement.classList.add("loaded");
+      loaderElement.classList.add("loaded");
+      wrapperElement.style.transition = "";
+      loaderElement.style.transition = "";
+      wrapperElement.style.opacity = "";
+      loaderElement.style.opacity = "";
+    }, 250);
+  }, 1750);
+});
+
 // Import the functions you need from the SDKs you need
 
 function local_or_public() {

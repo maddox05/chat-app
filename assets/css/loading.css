@@ -32,6 +32,10 @@
   animation: rollingRock 2.5s cubic-bezier(0.79, 0, 0.47, 0.97) infinite;
 }
 
+.loader.loaded {
+  display: none;
+}
+
 @keyframes rollingRock {
   0% {
     transform: translate(0, -1em) rotate(-45deg);
