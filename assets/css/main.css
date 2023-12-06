@@ -38,6 +38,11 @@ a {
   font-family: "Monocraft", "Montserrat", sans-serif;
   font-size: 1rem;
   margin-bottom: 10px;
+  display: none;
+}
+
+.wrapper.loaded {
+  display: block;
 }
 
 footer {
