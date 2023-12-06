@@ -38,6 +38,7 @@ a {
   font-family: "Monocraft", "Montserrat", sans-serif;
   font-size: 1rem;
   margin-bottom: 10px;
+  display: none;
 }
 
 footer {
