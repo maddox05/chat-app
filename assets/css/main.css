@@ -114,3 +114,7 @@ button img {
   width: auto;
   pointer-events: none;
 }
+
+.hidden {
+  display: none;
+}
